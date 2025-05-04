@@ -3,20 +3,12 @@ import { onMount } from 'svelte';
 
 import PolarPlot from './PolarPlot.svelte';
 import Sailnumber from './Sailnumber.svelte';
-import { getBoat, getExtremes, getRandomBoat } from '../api.js';
-
-export let sailnumber;
+import { getBoat, getExtremes, randomBoat, indexSize } from '../api.js';
 
 let hoverSailnumber;
 let boat;
 
-async function loadRandomBoat() {
-    sailnumber = await getRandomBoat();
-}
-
-onMount(async () => {
-    hoverSailnumber = await getRandomBoat();
-});
+hoverSailnumber = $randomBoat;
 
 async function loadBoat(number) {
     if (number) {
@@ -39,19 +31,19 @@ const labels = {
     <div class="row gx-5">
         <div class="col col-sm-8 p-4">
             <p>
-                Polar diagrams for sailyachts with ORC certificates. Select one of the boats below, search by
-                sailnumber, name or type or select a
-                <span on:click={loadRandomBoat} class="link-primary">random boat</span>.
+                Polar diagrams for {$indexSize || 'lots of'} sailyachts with ORC certificates. Select one of the boats below,
+                search by sailnumber, name or type or select a
+                <a href="#random" class="link-primary">random boat</a>.
             </p>
 
             <p>
-                Questions/suggestions? Contact me on <a href="https://twitter.com/jietermanis">Twitter</a> or
+                Questions/suggestions? Contact me on
                 <a href="https://github.com/jieter/orc-data">GitHub</a>. All data is fetched from
                 <a href="https://orc.org/index.asp?id=44">ORC.org</a>.
             </p>
         </div>
         <div class="col-sm-4 p-4">
-            <button class="btn btn-primary" on:click={loadRandomBoat}>Random boat</button>
+            <a href="#random" class="btn btn-primary">Random boat</a>
         </div>
     </div>
 
@@ -65,13 +57,12 @@ const labels = {
 
                             <ul class="list-unstyled">
                                 {#each boats as [number, name, type, value]}
-                                    <li
-                                        class="boat"
-                                        on:click={() => (sailnumber = number)}
-                                        on:mouseenter={() => loadBoat(number)}>
-                                        <Sailnumber {number} />
-                                        {name || '?'}
-                                        <span class="float-end">{value}</span>
+                                    <li class="boat" on:mouseenter={() => loadBoat(number)}>
+                                        <a href="#{number}" class="link">
+                                            <Sailnumber {number} />
+                                            {name || '?'}
+                                            <span class="float-end">{value < 100 ? value.toFixed(2) : value}</span>
+                                        </a>
                                     </li>
                                 {/each}
                             </ul>
@@ -82,7 +73,12 @@ const labels = {
         </div>
         <div class="col-sm-4 p-4">
             {#if boat}
-                <h6><Sailnumber number={boat.sailnumber} /> {boat.name} ({boat.boat.type})</h6>
+                <h6>
+                    <a href="#{boat.sailnumber}">
+                        <Sailnumber number={boat.sailnumber} />
+                    </a>
+                    {boat.name} ({boat.boat.type})
+                </h6>
 
                 <PolarPlot boats={[boat]} />
             {/if}
@@ -106,5 +102,10 @@ const labels = {
 
 h6 {
     white-space: nowrap;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
 }
 </style>

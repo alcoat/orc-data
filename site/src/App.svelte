@@ -1,17 +1,19 @@
 <script>
 import { onMount } from 'svelte';
 
+import { randomBoat } from './api.js';
 import Boat from './components/Boat.svelte';
 import BoatSelect from './components/BoatSelect.svelte';
 import Compare from './components/Compare.svelte';
 import CustomPlot from './components/CustomPlot.svelte';
 import Extremes from './components/Extremes.svelte';
-
+import Table from './components/Table.svelte';
 export let route = 'extremes';
 export let sailnumber = null;
 
 // A route is custom if it starts with one of the route prefixes.
-const isCustomRoute = (value) => ['extremes', 'customplot', 'compare'].some((item) => value.startsWith(item));
+const prefixes = ['extremes', 'customplot', 'compare', 'type', 'random'];
+const isCustomRoute = (value) => prefixes.some((item) => value.startsWith(item));
 
 function onhashchange() {
     const hash = window.location.hash;
@@ -35,6 +37,9 @@ $: {
     if (sailnumber && !isCustomRoute(sailnumber)) {
         window.location.hash = sailnumber;
     }
+}
+$: if (route == 'random') {
+    window.location.hash = $randomBoat;
 }
 </script>
 
@@ -71,12 +76,15 @@ $: {
         </div>
     </div>
 </nav>
+
 {#if route == 'extremes'}
-    <Extremes bind:sailnumber />
+    <Extremes />
 {:else if route == 'customplot'}
     <CustomPlot />
 {:else if route.startsWith('compare')}
     <Compare />
+{:else if route.startsWith('type')}
+    <Table q={decodeURIComponent(route.substring(5))} />
 {:else}
     <Boat {sailnumber} />
 {/if}

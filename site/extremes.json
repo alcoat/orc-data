@@ -7,6 +7,12 @@
       42.3
     ],
     [
+      "SUI/SUI001",
+      "QFX",
+      "QFX FOILER",
+      35.71
+    ],
+    [
       "ITA/ITA111U30",
       "BANDALARGA",
       "Ultimate 30",
@@ -37,6 +43,12 @@
       22.87
     ],
     [
+      "AUT/AUT11",
+      "Monster Project",
+      "VOLVO 70",
+      22.4
+    ],
+    [
       "ITA/GBR25555",
       "SCHOKWAVE 3",
       "90' Sloop",
@@ -47,18 +59,6 @@
       "Proteus",
       "Maxi 72",
       21.73
-    ],
-    [
-      "AUS/98888",
-      "NO LIMIT",
-      "R.P.63",
-      21.49
-    ],
-    [
-      "GER/GER7111",
-      "VARUNA",
-      "KER 56",
-      21.45
     ]
   ],
   "min_speed": [
@@ -69,15 +69,15 @@
       6.81
     ],
     [
-      "GRE/GRE1505",
-      "ALMYRA",
-      "EVASION 28",
-      6.8
-    ],
-    [
       "ESP/ESP10497_C",
       "ISFAGEL",
       "CUTLASS 27",
+      6.8
+    ],
+    [
+      "GRE/GRE1505",
+      "ALMYRA",
+      "EVASION 28",
       6.8
     ],
     [
@@ -297,9 +297,9 @@
       5.53
     ],
     [
-      "MLT/MLT112",
-      "SHAGALA BAGALA",
-      "Baltic 112 R/P",
+      "ESP/SY051",
+      "WINWIN",
+      "SUPERYACHT",
       5.47
     ],
     [
